@@ -5524,54 +5524,58 @@ const AdminCmSkuDetail: React.FC = () => {
                       ></i>
                     </span>
                     <span style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      {/* Hide buttons if SKU is pending (is_approved = 0) - shows "Approval Pending" */}
+                      {/* Show buttons based on approval status */}
                       {normalizeApprovalStatus(sku.is_approved) !== 0 && (
                         <>
-                          {/* Approved Button */}
-                          <button
-                            style={{
-                              background: '#30ea03',
-                              color: '#000',
-                              border: 'none',
-                              borderRadius: 4,
-                              fontWeight: 'bold',
-                              padding: '3px 12px',
-                              cursor: 'pointer',
-                              minWidth: 70,
-                              height: 24,
-                              fontSize: 12
-                            }}
-                            title="Mark as Approved"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleSkuApprovalOpen(sku, true);
-                            }}
-                          >
-                            Approved
-                          </button>
+                          {/* Approved Button - Hide if already approved (is_approved = 1) */}
+                          {normalizeApprovalStatus(sku.is_approved) !== 1 && (
+                            <button
+                              style={{
+                                background: '#30ea03',
+                                color: '#000',
+                                border: 'none',
+                                borderRadius: 4,
+                                fontWeight: 'bold',
+                                padding: '3px 12px',
+                                cursor: 'pointer',
+                                minWidth: 70,
+                                height: 24,
+                                fontSize: 12
+                              }}
+                              title="Mark as Approved"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleSkuApprovalOpen(sku, true);
+                              }}
+                            >
+                              Approved
+                            </button>
+                          )}
                           
-                          {/* Rejected Button */}
-                          <button
-                            style={{
-                              background: '#dc3545',
-                              color: '#fff',
-                              border: 'none',
-                              borderRadius: 4,
-                              fontWeight: 'bold',
-                              padding: '3px 12px',
-                              cursor: 'pointer',
-                              minWidth: 70,
-                              height: 24,
-                              fontSize: 12
-                            }}
-                            title="Mark as Rejected"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleSkuApprovalOpen(sku, false);
-                            }}
-                          >
-                            Rejected
-                          </button>
+                          {/* Rejected Button - Hide if already rejected (is_approved = 2) */}
+                          {normalizeApprovalStatus(sku.is_approved) !== 2 && (
+                            <button
+                              style={{
+                                background: '#dc3545',
+                                color: '#fff',
+                                border: 'none',
+                                borderRadius: 4,
+                                fontWeight: 'bold',
+                                padding: '3px 12px',
+                                cursor: 'pointer',
+                                minWidth: 70,
+                                height: 24,
+                                fontSize: 12
+                              }}
+                              title="Mark as Rejected"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleSkuApprovalOpen(sku, false);
+                              }}
+                            >
+                              Rejected
+                            </button>
+                          )}
                         </>
                       )}
                       <button
@@ -6291,54 +6295,58 @@ const AdminCmSkuDetail: React.FC = () => {
                               ></i>
                             </span>
                             <span style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                              {/* Hide buttons if SKU is pending (is_approved = 0) - shows "Approval Pending" */}
+                              {/* Show buttons based on approval status */}
                               {normalizeApprovalStatus(sku.is_approved) !== 0 && (
                                 <>
-                                  {/* Approved Button */}
-                                  <button
-                                    style={{
-                                      background: '#30ea03',
-                                      color: '#000',
-                                      border: 'none',
-                                      borderRadius: 4,
-                                      fontWeight: 'bold',
-                                      padding: '3px 12px',
-                                      cursor: 'pointer',
-                                      minWidth: 70,
-                                      height: 24,
-                                      fontSize: 12
-                                    }}
-                                    title="Mark as Approved"
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      handleSkuApprovalOpen(sku, true);
-                                    }}
-                                  >
-                                    Approved
-                                  </button>
+                                  {/* Approved Button - Hide if already approved (is_approved = 1) */}
+                                  {normalizeApprovalStatus(sku.is_approved) !== 1 && (
+                                    <button
+                                      style={{
+                                        background: '#30ea03',
+                                        color: '#000',
+                                        border: 'none',
+                                        borderRadius: 4,
+                                        fontWeight: 'bold',
+                                        padding: '3px 12px',
+                                        cursor: 'pointer',
+                                        minWidth: 70,
+                                        height: 24,
+                                        fontSize: 12
+                                      }}
+                                      title="Mark as Approved"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleSkuApprovalOpen(sku, true);
+                                      }}
+                                    >
+                                      Approved
+                                    </button>
+                                  )}
                                   
-                                  {/* Rejected Button */}
-                                  <button
-                                    style={{
-                                      background: '#dc3545',
-                                      color: '#fff',
-                                      border: 'none',
-                                      borderRadius: 4,
-                                      fontWeight: 'bold',
-                                      padding: '3px 12px',
-                                      cursor: 'pointer',
-                                      minWidth: 70,
-                                      height: 24,
-                                      fontSize: 12
-                                    }}
-                                    title="Mark as Rejected"
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      handleSkuApprovalOpen(sku, false);
-                                    }}
-                                  >
-                                    Rejected
-                                  </button>
+                                  {/* Rejected Button - Hide if already rejected (is_approved = 2) */}
+                                  {normalizeApprovalStatus(sku.is_approved) !== 2 && (
+                                    <button
+                                      style={{
+                                        background: '#dc3545',
+                                        color: '#fff',
+                                        border: 'none',
+                                        borderRadius: 4,
+                                        fontWeight: 'bold',
+                                        padding: '3px 12px',
+                                        cursor: 'pointer',
+                                        minWidth: 70,
+                                        height: 24,
+                                        fontSize: 12
+                                      }}
+                                      title="Mark as Rejected"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleSkuApprovalOpen(sku, false);
+                                      }}
+                                    >
+                                      Rejected
+                                    </button>
+                                  )}
                                 </>
                               )}
                               <button

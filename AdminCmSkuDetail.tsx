@@ -5524,8 +5524,8 @@ const AdminCmSkuDetail: React.FC = () => {
                       ></i>
                     </span>
                     <span style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      {/* Show both buttons only if SKU is pending (is_approved = 0) */}
-                      {normalizeApprovalStatus(sku.is_approved) === 0 && (
+                      {/* Hide buttons if SKU is pending (is_approved = 0) - shows "Approval Pending" */}
+                      {normalizeApprovalStatus(sku.is_approved) !== 0 && (
                         <>
                           {/* Approved Button */}
                           <button
@@ -6291,8 +6291,8 @@ const AdminCmSkuDetail: React.FC = () => {
                               ></i>
                             </span>
                             <span style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                              {/* Show both buttons only if SKU is pending (is_approved = 0) */}
-                              {normalizeApprovalStatus(sku.is_approved) === 0 && (
+                              {/* Hide buttons if SKU is pending (is_approved = 0) - shows "Approval Pending" */}
+                              {normalizeApprovalStatus(sku.is_approved) !== 0 && (
                                 <>
                                   {/* Approved Button */}
                                   <button

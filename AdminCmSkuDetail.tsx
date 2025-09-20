@@ -5524,8 +5524,8 @@ const AdminCmSkuDetail: React.FC = () => {
                       ></i>
                     </span>
                     <span style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      {/* Show buttons based on approval status */}
-                      {normalizeApprovalStatus(sku.is_approved) !== 0 && (
+                      {/* Show buttons based on approval status and admin access */}
+                      {normalizeApprovalStatus(sku.is_approved) !== 0 && sku.is_admin && (
                         <>
                           {/* Approved Button - Hide if already approved (is_approved = 1) */}
                           {normalizeApprovalStatus(sku.is_approved) !== 1 && (
@@ -6295,8 +6295,8 @@ const AdminCmSkuDetail: React.FC = () => {
                               ></i>
                             </span>
                             <span style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                              {/* Show buttons based on approval status */}
-                              {normalizeApprovalStatus(sku.is_approved) !== 0 && (
+                              {/* Show buttons based on approval status and admin access */}
+                              {normalizeApprovalStatus(sku.is_approved) !== 0 && sku.is_admin && (
                                 <>
                                   {/* Approved Button - Hide if already approved (is_approved = 1) */}
                                   {normalizeApprovalStatus(sku.is_approved) !== 1 && (

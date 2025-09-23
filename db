@@ -1,11 +1,11 @@
 SELECT 
-    -- SKU Details (always present)
+    -- SKU Details
     sku.id as sku_id,
     sku.sku_description,
     sku.cm_description,
     sku.sku_reference,
     sku.sku_code,
-    sku.cm_code,
+    sku.cm_code as sku_cm_code,
     sku.formulation_reference,
     sku.period,
     sku.skutype,
@@ -15,7 +15,7 @@ SELECT
     sku.created_by as sku_created_by,
     sku.created_date as sku_created_date,
     
-    -- Component Details (may be null)
+    -- Component Details
     cd.id as component_id,
     cd.component_code,
     cd.component_description,
@@ -24,42 +24,38 @@ SELECT
     cd.component_base_quantity,
     cd.component_base_uom_id,
     cd.percent_w_w,
-    cd.component_packaging_type_id as component_packaging_type,
+    cd.component_packaging_type_id,
     cd.component_valid_from,
     cd.component_valid_to,
     cd.is_active as component_is_active,
     cd.created_by as component_created_by,
     cd.created_date as component_created_date,
+    cd.cm_code as component_cm_code,
     
-    -- Mapping Details (may be null)
+    -- Mapping Details
     mapping.id as mapping_id,
     mapping.version,
-    mapping.component_packaging_type_id,
+    mapping.component_packaging_type_id as mapping_packaging_type,
     mapping.period_id,
     mapping.component_valid_from as mapping_valid_from,
     mapping.component_valid_to as mapping_valid_to,
     mapping.is_active as mapping_is_active,
     mapping.created_by as mapping_created_by,
-    mapping.created_at as mapping_created_at
+    mapping.created_at as mapping_created_at,
+    mapping.cm_code as mapping_cm_code
 
 FROM sdp_skudetails sku
 LEFT JOIN sdp_component_details cd ON (
-    sku.sku_code = cd.sku_code 
-    AND sku.cm_code = cd.cm_code
-    AND cd.is_active = true
+    sku.cm_code = cd.cm_code
+    AND sku.sku_code = cd.sku_code
 )
 LEFT JOIN sdp_sku_component_mapping_details mapping ON (
-    sku.sku_code = mapping.sku_code 
-    AND sku.cm_code = mapping.cm_code
+    sku.cm_code = mapping.cm_code
+    AND sku.sku_code = mapping.sku_code
     AND cd.component_code = mapping.component_code
-    AND mapping.is_active = true
 )
 WHERE 
-    sku.period = '2024'  -- Replace with your period value
-    AND sku.cm_code = 'CM001'  -- Replace with your cm_code value
-    AND sku.skutype = 'BULK'  -- Replace with your skutype value
-    AND sku.is_active = true
-    AND ('PACK001' IS NULL OR mapping.component_packaging_type_id = 'PACK001')  -- Replace 'PACK001' with your component_packaging_type_id or NULL
+    sku.cm_code = 'CM001'  -- Replace with your cm_code value
 ORDER BY 
     sku.sku_code,
     cd.component_code,

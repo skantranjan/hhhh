@@ -1,0 +1,137 @@
+CREATE TABLE IF NOT EXISTS public.sdp_skudetails
+(
+    id integer NOT NULL DEFAULT nextval('sdp_skudetails_id_seq'::regclass),
+    sku_description character varying(150) COLLATE pg_catalog."default",
+    cm_description character varying(150) COLLATE pg_catalog."default",
+    sku_reference character varying(50) COLLATE pg_catalog."default",
+    is_active boolean DEFAULT true,
+    created_by character varying(50) COLLATE pg_catalog."default",
+    created_date timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    purchased_quantity integer DEFAULT 0,
+    sku_reference_check character varying(50) COLLATE pg_catalog."default",
+    formulation_reference character varying(50) COLLATE pg_catalog."default",
+    period character varying(55) COLLATE pg_catalog."default",
+    dual_source_sku character varying(100) COLLATE pg_catalog."default",
+    cm_code character varying COLLATE pg_catalog."default",
+    sku_code character varying(250) COLLATE pg_catalog."default",
+    site character varying(255) COLLATE pg_catalog."default",
+    skutype character varying(255) COLLATE pg_catalog."default",
+    bulk_expert character varying(100) COLLATE pg_catalog."default",
+    is_approved integer,
+    is_copied boolean DEFAULT false,
+    is_display boolean,
+    is_sendforapproval boolean,
+    is_admin boolean DEFAULT false,
+    is_cmapproved boolean DEFAULT false,
+    comment text COLLATE pg_catalog."default",
+    CONSTRAINT sdp_skudetails_pkey PRIMARY KEY (id),
+    CONSTRAINT sdp_skudetails_cm_code_fkey FOREIGN KEY (cm_code)
+        REFERENCES public.sdp_contractors (cm_code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+
+
+
+
+
+
+
+  CREATE TABLE IF NOT EXISTS public.sdp_sku_component_mapping_details
+(
+    id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    cm_code character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    sku_code character varying(250) COLLATE pg_catalog."default" NOT NULL,
+    component_code character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    version integer NOT NULL,
+    component_packaging_type_id character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    period_id integer NOT NULL,
+    component_valid_from timestamp without time zone NOT NULL,
+    component_valid_to timestamp without time zone NOT NULL,
+    created_by character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    is_active boolean DEFAULT true,
+    componentvaliditydatefrom date,
+    componentvaliditydateto date,
+    component_quantity character varying(255) COLLATE pg_catalog."default",
+    component_uom_id character varying(255) COLLATE pg_catalog."default",
+    component_base_quantity character varying(255) COLLATE pg_catalog."default",
+    component_base_uom_id character varying(255) COLLATE pg_catalog."default",
+    percent_w_w character varying(255) COLLATE pg_catalog."default",
+    CONSTRAINT sdp_sku_component_mapping_details_pkey PRIMARY KEY (cm_code, sku_code, component_code, version, component_packaging_type_id, period_id, component_valid_from, component_valid_to),
+    CONSTRAINT fk_summary_period FOREIGN KEY (period_id)
+        REFERENCES public.sdp_period (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+    CONSTRAINT sdp_sku_component_mapping_details_version_check CHECK (version > 0)
+)
+
+
+
+
+
+  CREATE TABLE IF NOT EXISTS public.sdp_component_details
+(
+    id integer NOT NULL DEFAULT nextval('sdp_component_details_id_seq'::regclass),
+    sku_code character varying(255) COLLATE pg_catalog."default",
+    formulation_reference character varying(255) COLLATE pg_catalog."default",
+    material_type_id character varying(255) COLLATE pg_catalog."default",
+    components_reference character varying(255) COLLATE pg_catalog."default",
+    component_code character varying(255) COLLATE pg_catalog."default",
+    component_description character varying(255) COLLATE pg_catalog."default",
+    component_valid_from timestamp without time zone,
+    component_valid_to timestamp without time zone,
+    component_material_group character varying(255) COLLATE pg_catalog."default",
+    component_quantity character varying(255) COLLATE pg_catalog."default",
+    component_uom_id character varying(255) COLLATE pg_catalog."default",
+    component_base_quantity character varying(255) COLLATE pg_catalog."default",
+    component_base_uom_id character varying(255) COLLATE pg_catalog."default",
+    percent_w_w character varying(255) COLLATE pg_catalog."default",
+    evidence character varying(255) COLLATE pg_catalog."default",
+    component_packaging_type_id character varying(255) COLLATE pg_catalog."default",
+    component_packaging_material character varying(255) COLLATE pg_catalog."default",
+    helper_column character varying(255) COLLATE pg_catalog."default",
+    component_unit_weight character varying(255) COLLATE pg_catalog."default",
+    weight_unit_measure_id character varying(255) COLLATE pg_catalog."default",
+    percent_mechanical_pcr_content character varying(255) COLLATE pg_catalog."default",
+    percent_mechanical_pir_content character varying(255) COLLATE pg_catalog."default",
+    percent_chemical_recycled_content character varying(255) COLLATE pg_catalog."default",
+    percent_bio_sourced character varying(255) COLLATE pg_catalog."default",
+    material_structure_multimaterials character varying(255) COLLATE pg_catalog."default",
+    component_packaging_color_opacity character varying(255) COLLATE pg_catalog."default",
+    component_packaging_level_id character varying(255) COLLATE pg_catalog."default",
+    component_dimensions character varying(100) COLLATE pg_catalog."default",
+    packaging_specification_evidence character varying(255) COLLATE pg_catalog."default",
+    evidence_of_recycled_or_bio_source character varying(255) COLLATE pg_catalog."default",
+    last_update_date character varying(255) COLLATE pg_catalog."default",
+    category_entry_id timestamp without time zone,
+    data_verification_entry_id character varying(255) COLLATE pg_catalog."default",
+    user_id character varying(255) COLLATE pg_catalog."default",
+    signed_off_by integer,
+    signed_off_date character varying(255) COLLATE pg_catalog."default",
+    mandatory_fields_completion_status timestamp without time zone,
+    evidence_provided character varying(255) COLLATE pg_catalog."default",
+    document_status character varying(255) COLLATE pg_catalog."default",
+    is_active boolean DEFAULT true,
+    created_by character varying(255) COLLATE pg_catalog."default",
+    created_date timestamp without time zone,
+    year character varying(255) COLLATE pg_catalog."default",
+    component_unit_weight_id character varying(255) COLLATE pg_catalog."default",
+    cm_code character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    period_id integer,
+    periods character varying(255) COLLATE pg_catalog."default",
+    version integer DEFAULT 1,
+    componentvaliditydatefrom date,
+    componentvaliditydateto date,
+    CONSTRAINT sdp_component_details_pkey PRIMARY KEY (id),
+    CONSTRAINT fk_period_id FOREIGN KEY (period_id)
+        REFERENCES public.sdp_period (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT sdp_component_details_signed_off_by_fkey FOREIGN KEY (signed_off_by)
+        REFERENCES public.sdp_users (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)

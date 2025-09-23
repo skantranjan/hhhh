@@ -968,7 +968,7 @@ const GeneratePdf: React.FC = () => {
         component_description: item['component_description'] || '-',
         component_valid_from: formatDate(item['mapping_valid_from']),
         component_valid_to: formatDate(item['mapping_valid_to']),
-        component_material_group: '-', // Not in API response
+        component_material_group: item['component_material_group'] || '-',
         component_quantity: item['component_quantity'] || '-',
         component_uom_id: item['component_uom_id'] || '-',
         component_base_quantity: item['component_base_quantity'] || '-',
@@ -978,18 +978,18 @@ const GeneratePdf: React.FC = () => {
         component_packaging_type_id: item['component_packaging_type_id'] || '-',
         component_packaging_type_display: item['component_packaging_type_id'] || '-', // Store original value for display
         component_packaging_material: item['Component Packaging Material'] || '-',
-        component_unit_weight: '-', // Not in API response
-        weight_unit_measure_id: '-', // Not in API response
-        percent_mechanical_pcr_content: '-', // Not in API response
-        percent_mechanical_pir_content: '-', // Not in API response
-        percent_chemical_recycled_content: '-', // Not in API response
-        percent_bio_sourced: '-', // Not in API response
+        component_unit_weight: item['component_unit_weight'] || '-',
+        weight_unit_measure_id: item['weight_unit_measure_id'] || '-',
+        percent_mechanical_pcr_content: item['percent_mechanical_pcr_content'] || '-',
+        percent_mechanical_pir_content: item['percent_mechanical_pir_content'] || '-',
+        percent_chemical_recycled_content: item['percent_chemical_recycled_content'] || '-',
+        percent_bio_sourced: item['percent_bio_sourced'] || '-',
         material_structure_multimaterials: '-', // Not in API response
         component_packaging_color_opacity: '-', // Not in API response
         component_packaging_level_id: '-', // Not in API response
         component_dimensions: '-', // Not in API response
         packaging_specification_evidence: '-', // Not in API response
-        evidence_of_recycled_or_bio_source: '-', // Not in API response
+        evidence_of_recycled_or_bio_source: item['evidence_of_recycled_or_bio_source'] || '-',
         last_update_date: '-', // Not in API response
         
         // Additional fields from API
@@ -1408,36 +1408,6 @@ const GeneratePdf: React.FC = () => {
             </div>
           </div>
           
-          {/* Action Buttons Section */}
-          <div className="row" style={{ marginTop: '20px' }}>
-            <div className="col-12">
-              <div style={{ display: 'flex', gap: '15px', justifyContent: 'center' }}>
-
-                <button
-                  style={{ 
-                    background: '#30ea03', 
-                    color: '#000', 
-                    border: '1px solid #30ea03',
-                    padding: '12px 24px',
-                    borderRadius: '6px',
-                    fontWeight: '600',
-                    fontSize: '14px',
-                    cursor: selectedRows.length === 0 ? 'not-allowed' : 'pointer',
-                    opacity: selectedRows.length === 0 ? 0.6 : 1,
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    transition: 'all 0.2s ease'
-                  }}
-                  onClick={handleGeneratePDF}
-                  disabled={selectedRows.length === 0}
-                >
-                  <i className="ri-file-pdf-2-line" style={{ fontSize: '16px' }}></i>
-                  Generate PDF
-                </button>
-              </div>
-            </div>
-          </div>
         </div>
 
         {loading && (
@@ -1697,6 +1667,37 @@ const GeneratePdf: React.FC = () => {
                       )}
                     </tbody>
                   </table>
+                </div>
+
+                {/* Generate PDF Button - Bottom Right */}
+                <div style={{ 
+                  display: 'flex', 
+                  justifyContent: 'flex-end', 
+                  marginTop: '20px',
+                  paddingRight: '10px'
+                }}>
+                  <button
+                    style={{ 
+                      background: '#30ea03', 
+                      color: '#000', 
+                      border: '1px solid #30ea03',
+                      padding: '12px 24px',
+                      borderRadius: '6px',
+                      fontWeight: '600',
+                      fontSize: '14px',
+                      cursor: selectedRows.length === 0 ? 'not-allowed' : 'pointer',
+                      opacity: selectedRows.length === 0 ? 0.6 : 1,
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      transition: 'all 0.2s ease'
+                    }}
+                    onClick={handleGeneratePDF}
+                    disabled={selectedRows.length === 0}
+                  >
+                    <i className="ri-file-pdf-2-line" style={{ fontSize: '16px' }}></i>
+                    Generate PDF
+                  </button>
                 </div>
 
               </div>

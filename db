@@ -1,55 +1,66 @@
 SELECT 
-    sku.cm_code AS "CM Code",
-    sku.cm_description AS "CM Description",
-    sku.sku_code AS "SKU Code",
-    sku.sku_description AS "SKU Description",
-    sku.purchased_quantity AS "Purchased Quantity",
-    sku.sku_reference AS "Reference SKU",
-    sku.skutype AS "SKU Type",
-    sku.site AS "Site",
-    sku.sku_reference_check AS "SKU Reference Check",
-    sku.formulation_reference AS "Formulation Reference",
-    comp.material_type_id AS "Material Type",
-    comp.components_reference AS "Components Reference",
-    comp.component_code AS "Component Code",
-    comp.component_description AS "Component Description",
-    comp.component_valid_from AS "Component Validity From",
-    comp.component_valid_to AS "Component Validity To",
-    comp.component_material_group AS "Component Material Group",
-    comp.component_quantity AS "Component Quantity",
-    comp.component_uom_id AS "Component Unit of Measure",
-    comp.component_base_quantity AS "Component Base Quantity",
-    comp.component_base_uom_id AS "Component Base Unit of Measure",
-    comp.percent_w_w AS "Component %w/w",
-    comp.evidence AS "Evidence",
-    comp.component_packaging_type_id AS "Component Packaging Type",
-    comp.component_packaging_material AS "Component Packaging Material",
-    comp.helper_column AS "Helper Column",
-    comp.component_unit_weight AS "Component Unit Weight",
-    comp.weight_unit_measure_id AS "Weight Unit Measure",
-    comp.percent_mechanical_pcr_content AS "% Mechanical Post-Consumer Recycled Content(inc Chemical)",
-    comp.percent_mechanical_pir_content AS "% Mechanical Post-Industiral Recycled Content",
-    comp.percent_chemical_recycled_content AS "% Chemical Recycled Content",
-    comp.percent_bio_sourced AS "% Bio Sourced",
-    comp.material_structure_multimaterials AS "Material Structure-multimaterial only(with % wt)",
-    comp.component_packaging_color_opacity AS "Component Packaging Colour",
-    comp.component_packaging_level_id AS "Component Packaging Level",
-    comp.component_dimensions AS "Component Dimensions",
-    comp.packaging_specification_evidence AS "Packaging Specification Evidence",
-    comp.evidence_of_recycled_or_bio_source AS "Evidence of Recycled or Bio Source",
-    comp.last_update_date AS "Last Update Date"
-FROM public.sdp_skudetails sku
-INNER JOIN public.sdp_component_details comp 
-    ON sku.sku_code = comp.sku_code 
-    AND sku.cm_code = comp.cm_code
-INNER JOIN public.sdp_sku_component_mapping_details mapping
-    ON sku.sku_code = mapping.sku_code 
+    -- SKU Details (always present)
+    sku.id as sku_id,
+    sku.sku_description,
+    sku.cm_description,
+    sku.sku_reference,
+    sku.sku_code,
+    sku.cm_code,
+    sku.formulation_reference,
+    sku.period,
+    sku.skutype,
+    sku.site,
+    sku.bulk_expert,
+    sku.is_active as sku_is_active,
+    sku.created_by as sku_created_by,
+    sku.created_date as sku_created_date,
+    
+    -- Component Details (may be null)
+    cd.id as component_id,
+    cd.component_code,
+    cd.component_description,
+    cd.component_quantity,
+    cd.component_uom_id,
+    cd.component_base_quantity,
+    cd.component_base_uom_id,
+    cd.percent_w_w,
+    cd.component_packaging_type_id as component_packaging_type,
+    cd.component_valid_from,
+    cd.component_valid_to,
+    cd.is_active as component_is_active,
+    cd.created_by as component_created_by,
+    cd.created_date as component_created_date,
+    
+    -- Mapping Details (may be null)
+    mapping.id as mapping_id,
+    mapping.version,
+    mapping.component_packaging_type_id,
+    mapping.period_id,
+    mapping.component_valid_from as mapping_valid_from,
+    mapping.component_valid_to as mapping_valid_to,
+    mapping.is_active as mapping_is_active,
+    mapping.created_by as mapping_created_by,
+    mapping.created_at as mapping_created_at
+
+FROM sdp_skudetails sku
+LEFT JOIN sdp_component_details cd ON (
+    sku.sku_code = cd.sku_code 
+    AND sku.cm_code = cd.cm_code
+    AND cd.is_active = true
+)
+LEFT JOIN sdp_sku_component_mapping_details mapping ON (
+    sku.sku_code = mapping.sku_code 
     AND sku.cm_code = mapping.cm_code
-    AND comp.component_code = mapping.component_code
+    AND cd.component_code = mapping.component_code
+    AND mapping.is_active = true
+)
 WHERE 
-    sku.cm_code = 'cde'
-    AND comp.period_id = 3
-    AND comp.material_type_id = 'Packaging'
+    sku.period = '2024'  -- Replace with your period value
+    AND sku.cm_code = 'CM001'  -- Replace with your cm_code value
+    AND sku.skutype = 'BULK'  -- Replace with your skutype value
     AND sku.is_active = true
-    AND comp.is_active = true
-    AND mapping.is_active = true;
+    AND ('PACK001' IS NULL OR mapping.component_packaging_type_id = 'PACK001')  -- Replace 'PACK001' with your component_packaging_type_id or NULL
+ORDER BY 
+    sku.sku_code,
+    cd.component_code,
+    mapping.version DESC;

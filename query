@@ -1,0 +1,66 @@
+SELECT 
+    -- SKU Details (always present)
+    sku.id as sku_id,
+    sku.sku_description,
+    sku.cm_description,
+    sku.sku_reference,
+    sku.sku_code,
+    sku.cm_code,
+    sku.formulation_reference,
+    sku.period,
+    sku.skutype,
+    sku.site,
+    sku.bulk_expert,
+    sku.is_active as sku_is_active,
+    sku.created_by as sku_created_by,
+    sku.created_date as sku_created_date,
+    
+    -- Component Details (may be null)
+    cd.id as component_id,
+    cd.component_code,
+    cd.component_description,
+    cd.component_quantity,
+    cd.component_uom_id,
+    cd.component_base_quantity,
+    cd.component_base_uom_id,
+    cd.percent_w_w,
+    cd.component_packaging_type_id as component_packaging_type,
+    cd.component_valid_from,
+    cd.component_valid_to,
+    cd.is_active as component_is_active,
+    cd.created_by as component_created_by,
+    cd.created_date as component_created_date,
+    
+    -- Mapping Details (may be null)
+    mapping.id as mapping_id,
+    mapping.version,
+    mapping.component_packaging_type_id,
+    mapping.period_id,
+    mapping.component_valid_from as mapping_valid_from,
+    mapping.component_valid_to as mapping_valid_to,
+    mapping.is_active as mapping_is_active,
+    mapping.created_by as mapping_created_by,
+    mapping.created_at as mapping_created_at
+
+FROM sdp_skudetails sku
+LEFT JOIN sdp_component_details cd ON (
+    sku.sku_code = cd.sku_code 
+    AND sku.cm_code = cd.cm_code
+    AND cd.is_active = true
+)
+LEFT JOIN sdp_sku_component_mapping_details mapping ON (
+    sku.sku_code = mapping.sku_code 
+    AND sku.cm_code = mapping.cm_code
+    AND cd.component_code = mapping.component_code
+    AND mapping.is_active = true
+    AND (mapping.component_packaging_type_id = $4 OR $4 IS NULL)
+)
+WHERE 
+    sku.period = $1
+    AND sku.cm_code = $2
+    AND sku.skutype = $3
+    AND sku.is_active = true
+ORDER BY 
+    sku.sku_code,
+    cd.component_code,
+    mapping.version DESC;

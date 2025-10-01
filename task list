@@ -1,0 +1,25 @@
+1.) change the Advanced Component Informatio to Component  specification
+2.)Activate the drop down Component Type both Packaging type and Raw material both will come and according to that we will show hide the fileds
+3.)  hide the Advanced Component Information collapse in case of Raw material
+4.) % Mechanical Post-Consumer Recycled Content *   and % Mechanical Post-Industrial Recycled Content  will not come in the field raw material,Material structure - multimaterials only (with % wt),Component packaging colour / opacity   these will also not come in the cace of Raw matrail 
+5.) Evidence field will come in the case of Raw materail 
+6.) the fields spacing we have to reduce 
+7.) Material structure - multimaterials only (with % wt) and Component packaging colour / opacity will come above the field
+8.) Component packaging level and Component dimensions (3D - LxWxH, 2D - LxW)  will not come in case of Raw material
+
+
+
+9.) If Sku is added and no component is adeded in that case :no component added no sku refrence available on the collapse bar and dont show the pending approval until we have at least one componenet addeded
+10.) Create a button before the Send for approval with the textlike: Send sku Addition Alert with email  on clik of that we will send the email that new sku have been added please update the component information
+
+11.) On GAIA page make the Component Type multi select 
+12.) expert/bluk already has already been excluded  exclude it from the page 
+13.)expert/bluk already has already been excluded    write this message also 
+14.) On the Gaia Page make the filter small so that  Period,Component Type,Component Packaging Types,exclude externak  than Filter buton than Reset button export to excel is remain on the same position 
+15.) export to excel is not working 
+16.)Filters are not working reset button is also not working 
+17.) cm code is missing in the grid 
+
+
+CM Code,	CM Description,	SKU Code,	SKU Description,	Purchased Quantity,	Reference SKU	,SKU Reference Check,	Formulation Reference,	Material Type,	Components Reference,	Component Code,	Component Description	,Component Validity From,	Component Validity To,	Component Material Group,	Component Quantity,	Component Unit of Measure,	Component Base Quantity,	Component Base Unit of Measure,	Component %w/w,	Evidence,	Component Packaging Type,	Component Packaging Material,	Helper Column	,Component Unit Weight,	Weight Unit Measure,	% Mechanical Post-Consumer Recycled Content(inc Chemical)	% Mechanical Post-Industiral Recycled Content	% Chemical Recycled Content	% Bio Sourced	Material Structure-multimaterial only(with % wt)	Component Packaging Colour	Component Packaging Level	Component Dimensions	Packaging Specification Evidence	Evidence of Recycled or Bio Source	Last Update Date
+

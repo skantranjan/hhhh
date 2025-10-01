@@ -21,5 +21,5 @@
 17.) cm code is missing in the grid 
 
 
-CM Code,	CM Description,	SKU Code,	SKU Description,	Purchased Quantity,	Reference SKU	,SKU Reference Check,	Formulation Reference,	Material Type,	Components Reference,	Component Code,	Component Description	,Component Validity From,	Component Validity To,	Component Material Group,	Component Quantity,	Component Unit of Measure,	Component Base Quantity,	Component Base Unit of Measure,	Component %w/w,	Evidence,	Component Packaging Type,	Component Packaging Material,	Helper Column	,Component Unit Weight,	Weight Unit Measure,	% Mechanical Post-Consumer Recycled Content(inc Chemical)	% Mechanical Post-Industiral Recycled Content	% Chemical Recycled Content	% Bio Sourced	Material Structure-multimaterial only(with % wt)	Component Packaging Colour	Component Packaging Level	Component Dimensions	Packaging Specification Evidence	Evidence of Recycled or Bio Source	Last Update Date
-
+18.) Loading issue
+19.) HTTP error! status: 422 - SKU description already exists in the system

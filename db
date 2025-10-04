@@ -1,62 +1,25 @@
-SELECT 
-    -- SKU Details
-    sku.id as sku_id,
-    sku.sku_description,
-    sku.cm_description,
-    sku.sku_reference,
-    sku.sku_code,
-    sku.cm_code as sku_cm_code,
-    sku.formulation_reference,
-    sku.period,
-    sku.skutype,
-    sku.site,
-    sku.bulk_expert,
-    sku.is_active as sku_is_active,
-    sku.created_by as sku_created_by,
-    sku.created_date as sku_created_date,
-    
-    -- Component Details
-    cd.id as component_id,
-    cd.component_code,
-    cd.component_description,
-    cd.component_quantity,
-    cd.component_uom_id,
-    cd.component_base_quantity,
-    cd.component_base_uom_id,
-    cd.percent_w_w,
-    cd.component_packaging_type_id,
-    cd.component_valid_from,
-    cd.component_valid_to,
-    cd.is_active as component_is_active,
-    cd.created_by as component_created_by,
-    cd.created_date as component_created_date,
-    cd.cm_code as component_cm_code,
-    
-    -- Mapping Details
-    mapping.id as mapping_id,
-    mapping.version,
-    mapping.component_packaging_type_id as mapping_packaging_type,
-    mapping.period_id,
-    mapping.component_valid_from as mapping_valid_from,
-    mapping.component_valid_to as mapping_valid_to,
-    mapping.is_active as mapping_is_active,
-    mapping.created_by as mapping_created_by,
-    mapping.created_at as mapping_created_at,
-    mapping.cm_code as mapping_cm_code
-
-FROM sdp_skudetails sku
-LEFT JOIN sdp_component_details cd ON (
-    sku.cm_code = cd.cm_code
-    AND sku.sku_code = cd.sku_code
-)
-LEFT JOIN sdp_sku_component_mapping_details mapping ON (
-    sku.cm_code = mapping.cm_code
-    AND sku.sku_code = mapping.sku_code
-    AND cd.component_code = mapping.component_code
-)
-WHERE 
-    sku.cm_code = 'CM001'  -- Replace with your cm_code value
-ORDER BY 
-    sku.sku_code,
-    cd.component_code,
-    mapping.version DESC;
+As an admin, when I log in I am unable to see my role on the tool. ie I was not able to see if I am admin in the portal	Yogita	24th Sept	Done	
+Update CMO email notification text: option A - send BOM infor to xxxx Option B review/update component information etc (with links)	Craig  	24-Sep	Working	We will send an email to CMO with the mentioned text
+This might be a P2 activity but is it possible to align input fields for the component info e.g. component code-description, qty-uom neext two each other as theyb are related information etc	Craig  	25-Sep		
+Is there any way to edit the CMO details after they have been created (i.e. if we need to update a SPOC)? Not able to see easily how to do that	Bradley	25-Sep	Phase 2	For now we have implemented the Add CMO page to onboard the CMO and SPocs. In Ph2 we will implement edit functionality.
+Does component category group need more details in the hover text?	Bradley	25-Sep	Working	Check Craig sheet and update for information
+Can component dimensions be standardised to mm?	Bradley	26-Sep	Done	
+Are we sure we want to limit component validity dates to the beginning of the reporting period? If we collect data from a new CMO we would want their data as far back as 2022 if possible	Bradley	26-Sep	Working	The date field will be open to enter any date but To date will be greater or equal to from date
+Component weight UoM should only have g, kg & LB as options	Bradley	26-Sep	Working	
+Recycling and materials section' - Could we change to 'Recycled Content & Materials Section'?	Bradley	26-Sep	Working	
+% Mechanical Post-Consumer Recycled Content (inc. Chemical)  - Can we change this to remove the (inc. Chemical) part?	Bradley	26-Sep	Working	
+Component packaging type reset when trying to update a component after creating?	Bradley	26-Sep	Working	
+Add to new SKU data notification a link to training material (linked to point 3)				We will discuss for the same
+If you save with missing values in advanced component information there is a 'has errors' message but no reference as to which fields are missing information	Craig  	26-Sep	Working	
+If I change values in advanced component information (with no gaps) I still see 'has errors' when I try to update component (screenshot in Craig sheet)	Craig  	26-Sep	Working	
+Pack_material 'included as an option for Packaging Material Type - please remove (screenshot in Craig sheet)	Craig	29-Sep	Working	
+Non-mandatory values that were included are no longer present if I create a new component and try to edit	Craig	29-Sep	Working	
+Mandatory value (Componenet Packaging Type) that was selected  when adding the component is no longer present in a when I go back in to edit	Craig	29-Sep	Done	
+Please can you share an Excel including Packaging Component (and associated packaging material for each)  so Bradley can review and finaise?	Craig	29-Sep		Sure, we are preparing that and share for review
+Please share CMO data Excel export with Gaia team to ensure they can ingest with no issues as this is the short twerm solution (Yogita - I think this might already be planned?)	Craig	29-Sep	Working	
+We should ony have weight UoM options in the component weight drop-down options -please can we review the list of options	Craig	29-Sep	Working	
+I edited an existing component and when I saved I received a 'Failed to update component' message even though all mandatory fields are populated - it is not cleear fromte message what the issue is (image in Craig feedback)	Craig	29-Sep	Working	
+I logged into the portal and received a 'changes are happening from Haleon users' message - what does this mean? As a CMO I should be able to access and edit existing components? (image in Craig feedback)	Craig	29-Sep	Working	When admin/CMO will send for approval then the screen will be block until the approval process.
+"Page Frozen" form both sides, CMO as well as Admin at the same time	Kaustav	30-Sep	Done	
+Page Frozen & couldnot access the system 	Shaimaa	30-Sep	Done	
+Delete component feature	Marina	1-Oct	Phase 2	
